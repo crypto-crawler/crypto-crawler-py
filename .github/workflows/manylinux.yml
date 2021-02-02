@@ -13,12 +13,8 @@ jobs:
           submodules: recursive
       - uses: actions-rs/toolchain@v1
         with:
+          profile: default
           toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --all-features
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
