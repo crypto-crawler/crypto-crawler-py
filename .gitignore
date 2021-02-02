@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+crypto_crawler/_lowlevel.py
+crypto_crawler/_lowlevel__ffi.py
