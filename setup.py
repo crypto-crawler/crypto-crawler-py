@@ -19,7 +19,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='crypto_crawler',
-    version="0.0.5",
+    version="0.0.6",
     author="soulmachine",
     description="A rock-solid cryprocurrency crawler",
     long_description=long_description,
@@ -29,7 +29,6 @@ setup(
     include_package_data=True,
     setup_requires=['milksnake'],
     install_requires=['milksnake'],
-    milksnake_universal=False,
     milksnake_tasks=[build_native],
     python_requires='>=3.6',
     classifiers = [
