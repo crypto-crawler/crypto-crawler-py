@@ -5,11 +5,11 @@ from setuptools.dist import Distribution
 def build_native(spec):
     build = spec.add_external_build(
         cmd=['cargo', 'build', '--release'],
-        path='./crypto-crawler-rs/crypto-crawler-ffi'
+        path='./crypto-crawler-ffi'
     )
     spec.add_cffi_module(
         module_path='crypto_crawler._lowlevel',
-        dylib=lambda: build.find_dylib('crypto_crawler_ffi', in_path='../target/release'),
+        dylib=lambda: build.find_dylib('crypto_crawler_ffi', in_path='target/release'),
         header_filename=lambda: build.find_header('crypto_crawler.h', in_path='include'),
         rtld_flags=['NOW', 'NODELETE']
     )
