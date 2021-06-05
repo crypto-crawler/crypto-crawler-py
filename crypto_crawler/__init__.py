@@ -79,7 +79,7 @@ def crawl_trade(
     market_type: MarketType,
     symbols: List[str],
     on_msg: Callable[[Message], None],
-    duration: int,
+    duration: int = 0,
 ):
     symbols_keepalive = [ffi.new("char[]", symbol.encode("utf-8")) for symbol in symbols]
 
@@ -97,7 +97,7 @@ def crawl_l2_event(
     market_type: MarketType,
     symbols: List[str],
     on_msg: Callable[[Message], None],
-    duration: int,
+    duration: int = 0,
 ):
     symbols_keepalive = [ffi.new("char[]", symbol.encode("utf-8")) for symbol in symbols]
 
@@ -116,7 +116,7 @@ def crawl_l2_snapshot(
     symbols: List[str],
     on_msg: Callable[[Message], None],
     interval: int,
-    duration: int,
+    duration: int = 0,
 ):
     symbols_keepalive = [ffi.new("char[]", symbol.encode("utf-8")) for symbol in symbols]
 
@@ -135,7 +135,7 @@ def crawl_l3_event(
     market_type: MarketType,
     symbols: List[str],
     on_msg: Callable[[Message], None],
-    duration: int,
+    duration: int = 0,
 ):
     symbols_keepalive = [ffi.new("char[]", symbol.encode("utf-8")) for symbol in symbols]
 
@@ -154,7 +154,7 @@ def crawl_l3_snapshot(
     symbols: List[str],
     on_msg: Callable[[Message], None],
     interval: int,
-    duration: int,
+    duration: int = 0,
 ):
     symbols_keepalive = [ffi.new("char[]", symbol.encode("utf-8")) for symbol in symbols]
 
