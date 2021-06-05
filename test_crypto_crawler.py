@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-from crypto_crawler import (MarketType, Message, MessageType, crawl_l2_event,
-                            crawl_trade)
+from crypto_crawler import (MarketType, crawl_l2_event, crawl_trade)
 
 
 def test_crawl_trade():
