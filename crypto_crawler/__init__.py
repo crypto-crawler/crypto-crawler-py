@@ -18,9 +18,15 @@ class MarketType(IntEnum):
     InverseFuture = lib.InverseFuture
     LinearSwap = lib.LinearSwap
     InverseSwap = lib.InverseSwap
-    Option = lib.Option
+
+    AmericanOption = lib.AmericanOption
+    EuropeanOption = lib.EuropeanOption
+
     QuantoFuture = lib.QuantoFuture
     QuantoSwap = lib.QuantoSwap
+
+    Move = lib.Move
+    BVOL = lib.BVOL
 
     def __str__(self):
         return _snake_case(self.name)
@@ -34,6 +40,7 @@ class MessageType(IntEnum):
     BBO = lib.BBO
     Ticker = lib.Ticker
     Candlestick = lib.Candlestick
+    FundingRate = lib.FundingRate
 
     def __str__(self):
         return _snake_case(self.name)
@@ -42,7 +49,6 @@ class Message(NamedTuple):
     exchange: str
     market_type: MarketType
     msg_type: MessageType
-    symbol: str
     received_at: int
     json: str
 
@@ -57,10 +63,9 @@ def _convert_msg(msg: object) -> Message:
     exchange = ffi.string(msg.exchange).decode("utf-8")
     market_type = MarketType(msg.market_type)
     msg_type = MessageType(msg.msg_type)
-    symbol = ffi.string(msg.symbol).decode("utf-8")
     received_at = msg.received_at
     json = ffi.string(msg.json).decode("utf-8")
-    return Message(exchange, market_type, msg_type, symbol, received_at, json)
+    return Message(exchange, market_type, msg_type, received_at, json)
 
 def _wrap_on_msg(on_msg: Callable[[Message], None]) -> Callable[[object], None]:
     '''Convert a python callback to C callback.'''

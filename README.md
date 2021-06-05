@@ -4,6 +4,20 @@ A rock-solid cryprocurrency crawler.
 
 This is Python wrapper on top of the [crypto-crawler](https://github.com/soulmachine/crypto-crawler-rs/tree/main/crypto-crawler) crate.
 
+## Quickstart
+
+Install,
+
+```bash
+pip3 install crypto-crawler
+```
+
+```python
+from crypto_crawler import (MarketType, crawl_trade)
+
+crawl_trade("binance", MarketType.Spot, ["BTCUSDT", "ETHUSDT"], lambda msg: print(msg), 1)
+```
+
 ## How to build
 
 On Mac OS X,
@@ -29,7 +43,7 @@ docker run -it --rm -v $(pwd):/project soulmachine/rust:manylinux2014 bash
 /opt/python/cp36-cp36m/bin/pip3 install -r requirements-dev.txt
 rm -rf build crypto-crawler-ffi/target
 /opt/python/cp36-cp36m/bin/python3 setup.py bdist_wheel
-auditwheel repair dist/*.whl --plat manylinux2014_x86_64
+auditwheel repair dist/*linux*.whl --plat manylinux2014_x86_64
 /opt/python/cp36-cp36m/bin/twine upload --repository testpypi wheelhouse/*
 ```
 
