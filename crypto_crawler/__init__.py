@@ -1,49 +1,39 @@
 import json
-import re
 from enum import IntEnum
 from typing import Callable, List, NamedTuple
 
 from crypto_crawler._lowlevel import ffi, lib
 
-# snake case
-_pattern = re.compile(r'(?<!^)(?=[A-Z])')
-
-def _snake_case(s: str) -> str:
-    return _pattern.sub('_', s).lower()
 
 class MarketType(IntEnum):
     '''Market type.'''
-    Spot = lib.Spot
-    LinearFuture = lib.LinearFuture
-    InverseFuture = lib.InverseFuture
-    LinearSwap = lib.LinearSwap
-    InverseSwap = lib.InverseSwap
+    spot = lib.Spot
+    linear_future = lib.LinearFuture
+    inverse_future = lib.InverseFuture
+    linear_swap = lib.LinearSwap
+    inverse_swap = lib.InverseSwap
 
-    AmericanOption = lib.AmericanOption
-    EuropeanOption = lib.EuropeanOption
+    american_option = lib.AmericanOption
+    european_option = lib.EuropeanOption
 
-    QuantoFuture = lib.QuantoFuture
-    QuantoSwap = lib.QuantoSwap
+    quanto_future = lib.QuantoFuture
+    quanto_swap = lib.QuantoSwap
 
-    Move = lib.Move
-    BVOL = lib.BVOL
+    move = lib.Move
+    bvol = lib.BVOL
 
-    def __str__(self):
-        return _snake_case(self.name)
 
 class MessageType(IntEnum):
-    Trade = lib.Trade
-    L2Event = lib.L2Event
-    L2Snapshot = lib.L2Snapshot
-    L3Event = lib.L3Event
-    L3Snapshot = lib.L3Snapshot
-    BBO = lib.BBO
-    Ticker = lib.Ticker
-    Candlestick = lib.Candlestick
-    FundingRate = lib.FundingRate
+    trade = lib.Trade
+    l2_event = lib.L2Event
+    l2_snapshot = lib.L2Snapshot
+    l3_event = lib.L3Event
+    l3_snapshot = lib.L3Snapshot
+    bbo = lib.BBO
+    ticker = lib.Ticker
+    candlestick = lib.Candlestick
+    funding_rate = lib.FundingRate
 
-    def __str__(self):
-        return _snake_case(self.name)
 
 class Message(NamedTuple):
     exchange: str
@@ -54,8 +44,8 @@ class Message(NamedTuple):
 
     def __str__(self):
         d = dict(self._asdict()) # pylint: disable=no-member
-        d["market_type"] = str(d["market_type"])
-        d["msg_type"] = str(d["msg_type"])
+        d["market_type"] = d["market_type"].name
+        d["msg_type"] = d["msg_type"].name
         return json.dumps(d)
 
 def _convert_msg(msg: object) -> Message:
@@ -85,7 +75,7 @@ def crawl_trade(
 
     lib.crawl_trade(
         ffi.new("char[]", exchange.encode("utf-8")),
-        int(market_type),
+        market_type.value,
         ffi.new("char *[]", symbols_keepalive),
         len(symbols),
         _wrap_on_msg(on_msg),
@@ -103,7 +93,7 @@ def crawl_l2_event(
 
     lib.crawl_l2_event(
         ffi.new("char[]", exchange.encode("utf-8")),
-        int(market_type),
+        market_type.value,
         ffi.new("char *[]", symbols_keepalive),
         len(symbols),
         _wrap_on_msg(on_msg),
@@ -122,7 +112,7 @@ def crawl_l2_snapshot(
 
     lib.crawl_l2_snapshot(
         ffi.new("char[]", exchange.encode("utf-8")),
-        int(market_type),
+        market_type.value,
         ffi.new("char *[]", symbols_keepalive),
         len(symbols),
         _wrap_on_msg(on_msg),
@@ -141,7 +131,7 @@ def crawl_l3_event(
 
     lib.crawl_l3_event(
         ffi.new("char[]", exchange.encode("utf-8")),
-        int(market_type),
+        market_type.value,
         ffi.new("char *[]", symbols_keepalive),
         len(symbols),
         _wrap_on_msg(on_msg),
@@ -160,7 +150,7 @@ def crawl_l3_snapshot(
 
     lib.crawl_l3_snapshot(
         ffi.new("char[]", exchange.encode("utf-8")),
-        int(market_type),
+        market_type.value,
         ffi.new("char *[]", symbols_keepalive),
         len(symbols),
         _wrap_on_msg(on_msg),

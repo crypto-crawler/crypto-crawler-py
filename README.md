@@ -15,7 +15,7 @@ pip3 install crypto-crawler
 ```python
 from crypto_crawler import MarketType, crawl_trade
 
-crawl_trade("binance", MarketType.Spot, ["BTCUSDT", "ETHUSDT"], lambda msg: print(msg))
+crawl_trade("binance", MarketType.spot, ["BTCUSDT", "ETHUSDT"], lambda msg: print(msg))
 ```
 
 ## How to build
