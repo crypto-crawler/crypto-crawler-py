@@ -42,7 +42,7 @@ with open("crypto-crawler-ffi/cbindgen.toml", "w", encoding="utf-8") as f_out:
 
 setup(
     name='crypto_crawler',
-    version="3.2.6",
+    version="3.2.9",
     author="soulmachine",
     description="A rock-solid cryprocurrency crawler",
     long_description=long_description,
